@@ -1,17 +1,14 @@
 import { WebSocketServer } from "ws";
-
-import { mcpConfig } from "@repo/config/mcp.config";
-import { wait } from "@repo/utils";
-
+import { mcpConfig } from "@/config/mcp.config";
 import { isPortInUse, killProcessOnPort } from "@/utils/port";
 
 export async function createWebSocketServer(
-  port: number = mcpConfig.defaultWsPort,
+  port: number = mcpConfig.ws.port,
 ): Promise<WebSocketServer> {
   killProcessOnPort(port);
   // Wait until the port is free
   while (await isPortInUse(port)) {
-    await wait(100);
+    await new Promise(resolve => setTimeout(resolve, 100));
   }
   return new WebSocketServer({ port });
 }
