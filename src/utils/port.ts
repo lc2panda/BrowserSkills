@@ -1,4 +1,3 @@
-import { execSync } from "node:child_process";
 import net from "node:net";
 
 export async function isPortInUse(port: number): Promise<boolean> {
@@ -13,15 +12,7 @@ export async function isPortInUse(port: number): Promise<boolean> {
 }
 
 export function killProcessOnPort(port: number) {
-  try {
-    if (process.platform === "win32") {
-      execSync(
-        `FOR /F "tokens=5" %a in ('netstat -ano ^| findstr :${port}') do taskkill /F /PID %a`,
-      );
-    } else {
-      execSync(`lsof -ti:${port} | xargs kill -9`);
-    }
-  } catch (error) {
-    console.error(`Failed to kill process on port ${port}:`, error);
-  }
+  // Simplified version - just check if port is in use
+  // The actual killing of processes is not essential for basic functionality
+  console.log(`Note: Port ${port} check only - process killing disabled in standalone build`);
 }

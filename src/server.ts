@@ -31,8 +31,9 @@ export async function createServerWithTools(options: Options): Promise<Server> {
     },
   );
 
-  const wss = await createWebSocketServer();
+  const { wss, httpServer } = await createWebSocketServer();
   wss.on("connection", (websocket) => {
+    console.log("WebSocket connection established from browser extension");
     // Close any existing connections
     if (context.hasWs()) {
       context.ws.close();
@@ -82,9 +83,11 @@ export async function createServerWithTools(options: Options): Promise<Server> {
     return { contents };
   });
 
+  const originalClose = server.close.bind(server);
   server.close = async () => {
-    await server.close();
-    await wss.close();
+    await originalClose();
+    wss.close();
+    httpServer.close();
     await context.close();
   };
 

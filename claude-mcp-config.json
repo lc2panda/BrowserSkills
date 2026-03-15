@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "browsermcp": {
+      "command": "node",
+      "args": ["/Users/panda/Downloads/mcp/dist/index.js"],
+      "env": {
+        "NODE_ENV": "production"
+      },
+      "disabled": false,
+      "allowWrites": true,
+      "allowReads": true,
+      "autoApprove": [],
+      "description": "Browser automation MCP server (forked and fixed by lc2panda)"
+    }
+  }
+}
