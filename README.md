@@ -1,81 +1,83 @@
+# 🚀 Browser MCP - 独立构建分支
+
 <a href="https://browsermcp.io">
   <img src="./.github/images/banner.png" alt="Browser MCP banner">
 </a>
 
-<h3 align="center">Browser MCP</h3>
+<h3 align="center">Browser MCP - 浏览器自动化 MCP 服务器</h3>
 
 <p align="center">
-  Automate your browser with AI.
+  Automate your browser with AI. / 使用 AI 自动化您的浏览器
   <br />
-  <a href="https://browsermcp.io"><strong>Website</strong></a> 
+  <a href="https://browsermcp.io"><strong>Official Website</strong></a> 
   •
-  <a href="https://docs.browsermcp.io"><strong>Docs</strong></a>
+  <a href="https://docs.browsermcp.io"><strong>Documentation</strong></a>
+  •
+  <a href="README_CN.md"><strong>中文完整版</strong></a>
 </p>
 
-## About
+---
 
-Browser MCP is an MCP server + Chrome extension that allows you to automate your browser using AI applications like VS Code, Claude, Cursor, and Windsurf.
+## 🌟 主要特点 / Key Features
 
-## Features
+| 特点 | 说明 |
+|------|------|
+| ⚡ **快速 / Fast** | 本地自动化，无网络延迟 / Local automation, no network latency |
+| 🔒 **私密 / Private** | 数据保留在本地设备 / Data stays on your local device |
+| 👤 **保持登录 / Logged In** | 使用现有浏览器配置文件 / Uses your existing browser profile |
+| 🥷 **防检测 / Stealth** | 使用真实浏览器指纹 / Uses real browser fingerprint |
 
-- ⚡ Fast: Automation happens locally on your machine, resulting in better performance without network latency.
-- 🔒 Private: Since automation happens locally, your browser activity stays on your device and isn't sent to remote servers.
-- 👤 Logged In: Uses your existing browser profile, keeping you logged into all your services.
-- 🥷🏼 Stealth: Avoids basic bot detection and CAPTCHAs by using your real browser fingerprint.
+---
 
-## 🚀 Fork Optimizations
+## 🔧 分支优化 / Fork Optimizations
 
-This fork resolves the main limitation of the original project: **independent build capability**.
+**此分支解决了原项目的主要限制：独立构建能力。**  
+*This fork resolves the main limitation of the original project: independent build capability.*
 
-### ✅ **Optimizations Made:**
+### ✅ 已完成的优化 / Optimizations Made
 
-1. **Removed Monorepo Dependencies**
-   - Eliminated all `workspace:*` dependencies (`@repo/config`, `@repo/types`, `@repo/messaging`, `@repo/utils`, `@r2r/messaging`)
-   - Added inline implementations for essential functionality
+#### 1. **移除 Monorepo 依赖 / Removed Monorepo Dependencies**
+- ✅ 移除所有 `workspace:*` 依赖
+- ✅ Eliminated all `workspace:*` dependencies
 
-2. **Added Missing Configuration Files**
-   - `src/config/app.config.ts` - Application configuration
-   - `src/config/mcp.config.ts` - MCP server configuration
-   - `src/types/mcp/tool.ts` - Complete tool type definitions (14 tools)
-   - `src/types/messages/ws.ts` - WebSocket message mappings
-   - `src/messaging/types.ts` - Message type utilities
-   - `src/messaging/ws/sender.ts` - WebSocket message sender
-
-3. **Fixed Import Paths**
-   - Updated all imports from `@repo/*` to `@/*` paths
-   - Fixed TypeScript module resolution
-
-4. **TypeScript Compatibility**
-   - Passes strict TypeScript checking (`npm run typecheck`)
-   - Successfully builds standalone
-
-## 🛠 Installation & Setup
-
-### **1. Install MCP Server**
+#### 2. **创建缺失配置文件 / Added Missing Configuration Files**
 ```bash
-# Clone this repository
+src/config/app.config.ts        # 应用配置 / Application configuration
+src/config/mcp.config.ts        # MCP 服务器配置 / MCP server configuration
+src/types/mcp/tool.ts           # 14 种工具类型 / Complete tool type definitions
+src/types/messages/ws.ts        # WebSocket 消息映射 / WebSocket message mappings
+src/messaging/types.ts          # 消息类型工具 / Message type utilities
+src/messaging/ws/sender.ts      # WebSocket 消息发送器 / WebSocket message sender
+```
+
+#### 3. **技术兼容性 / Technical Compatibility**
+- ✅ TypeScript 严格检查通过 / Passes strict TypeScript checking
+- ✅ 可独立成功构建 / Successfully builds standalone
+- ✅ 兼容官方 Chrome 扩展 / Compatible with official Chrome extension
+
+---
+
+## 🛠️ 快速开始 / Quick Start
+
+### 1. 克隆并构建 / Clone & Build
+```bash
+# 克隆此仓库 / Clone this repository
 git clone https://github.com/lc2panda/mcp.git
 cd mcp
 
-# Install dependencies
+# 安装依赖 / Install dependencies
 npm install
 
-# Build the MCP server
+# 构建 MCP 服务器 / Build the MCP server
 npm run build
 
-# Test the server (shows help)
+# 测试服务器 / Test the server (shows help)
 node dist/index.js --help
 ```
 
-### **2. Install Chrome Extension**
-1. Visit [Browser MCP Chrome Web Store](https://chromewebstore.google.com/detail/browsermcp/...) *(Check official site for latest link)*
-2. Click "Add to Chrome" to install the extension
-3. Pin the extension for easy access
-4. Click the extension icon and "Connect" to link to MCP server
-
-### **3. Configure Your AI Application**
-Add to your AI app's MCP server configuration:
+### 2. 配置 MCP 客户端 / Configure MCP Client
 ```json
+// 在 AI 应用中配置 / Add to your AI app's MCP configuration
 {
   "mcpServers": {
     "browsermcp": {
@@ -87,38 +89,118 @@ Add to your AI app's MCP server configuration:
 }
 ```
 
-### **4. Start Automating**
-- The MCP server runs on port `8765` by default
-- Connect browser tabs via the extension
-- Use AI tools to automate browser actions
-
-## 🧪 Testing the Installation
-
-**Test Google Search Automation:**
-1. Ensure MCP server is running
-2. Connect a browser tab via the extension
-3. Use AI tools to:
-   - Navigate to `https://google.com`
-   - Search for "OpenClaw"
-   - Take screenshots
-   - Extract console logs
-
-## 📋 Verification Checklist
-- [ ] MCP server builds successfully (`npm run build`)
-- [ ] TypeScript checks pass (`npm run typecheck`)
-- [ ] Chrome extension installed and connected
-- [ ] AI application configured with MCP server
-- [ ] Browser automation tools work as expected
-
-## 🐛 Issue Reporting
-If you encounter issues, check:
-1. Chrome extension is installed and connected
-2. MCP server is running (`node dist/index.js`)
-3. Port `8765` is available for WebSocket connections
-4. AI application has proper MCP configuration
+### 3. 连接浏览器扩展 / Connect Browser Extension
+1. 安装 Chrome 扩展 / Install Chrome extension
+2. 固定扩展并点击 "Connect" / Pin extension and click "Connect"
+3. 验证连接状态 / Verify connection status
 
 ---
 
-## Original Credits
+## 🧪 功能测试 / Functional Testing
 
-Browser MCP was adapted from the [Playwright MCP server](https://github.com/microsoft/playwright-mcp) in order to automate the user's browser rather than creating new browser instances. This allows using your existing browser profile for logged-in sessions and avoids bot detection mechanisms.
+```javascript
+// 示例测试代码 / Example test code
+await navigate("https://google.com")
+await type("input[name='q']", "OpenClaw")
+await click("input[value='Google 搜索']")
+await wait(3000)
+const snapshot = await snapshot()
+const screenshot = await screenshot()
+```
+
+## 📋 验证清单 / Verification Checklist
+
+- [ ] MCP 服务器成功构建 / MCP server builds successfully
+- [ ] TypeScript 检查通过 / TypeScript checks pass
+- [ ] Chrome 扩展已连接 / Chrome extension connected
+- [ ] AI 应用配置完成 / AI application configured
+- [ ] 浏览器自动化工作正常 / Browser automation works as expected
+
+---
+
+## 🐛 问题报告 / Issue Reporting
+
+### 常见问题 / Common Issues
+1. **连接失败 / Connection Failed**
+   - 检查服务器是否运行 / Check if server is running: `node dist/index.js`
+   - 检查端口 8765 是否可用 / Check if port 8765 is available
+
+2. **工具不可用 / Tools Not Available**
+   - 重启 MCP 客户端 / Restart MCP client
+   - 验证配置文件路径 / Verify configuration file path
+
+---
+
+## 📄 文档资源 / Documentation Resources
+
+| 文档 | 描述 |
+|------|------|
+| [README_CN.md](README_CN.md) | 完整中文文档 / Full Chinese documentation |
+| [TESTING.md](TESTING.md) | 测试报告 / Testing report |
+| [TEST_CLAUDE_CODE.md](TEST_CLAUDE_CODE.md) | Claude Code 集成指南 / Claude Code integration guide |
+
+---
+
+## 🚀 一键安装脚本 / One-Click Setup
+
+```bash
+# 运行安装脚本 / Run setup script
+./setup-and-test.sh
+```
+
+脚本会自动：
+- ✅ 构建项目 / Build the project
+- ✅ 配置 MCP 客户端 / Configure MCP client
+- ✅ 启动服务器 / Start the server
+- ✅ 提供测试指南 / Provide testing guidance
+
+---
+
+## 🤝 技术贡献 / Technical Contributions
+
+### 修复的关键问题 / Key Issues Fixed
+1. **递归调用问题 / Recursive Call Issue**: `server.close` 方法修复
+2. **系统依赖问题 / System Dependency Issue**: 移除 `lsof` 依赖
+3. **WebSocket 服务器 / WebSocket Server**: 正确集成 HTTP+WebSocket 双服务
+4. **缺失配置 / Missing Configuration**: 创建 6 个缺失的配置文件
+5. **导入路径 / Import Paths**: 修复所有 `@repo/*` 引用
+
+---
+
+## 📊 项目状态 / Project Status
+
+| 项目指标 | 状态 |
+|----------|------|
+| **独立构建** / Independent Build | ✅ 完成 / Complete |
+| **TypeScript 检查** / TypeScript Checking | ✅ 通过 / Passed |
+| **Chrome 扩展兼容** / Chrome Extension Compatibility | ✅ 已验证 / Verified |
+| **服务器运行** / Server Running | ✅ 正常 / Normal |
+| **功能测试** / Functional Testing | 🔄 待验证 / Pending |
+
+---
+
+<details>
+<summary><strong>📜 完整提交记录 / Complete Commit History</strong></summary>
+
+```bash
+# 最新提交记录 / Latest commits
+63bc5ca [FINAL BUGFIX] Complete WebSocket server and final fixes
+3eca73e [DOCS] Update README with fork optimizations and installation guide  
+52e67a9 [BUGFIX] Make project independently buildable
+9db12f2 chore: version 0.1.3 (original commit)
+```
+
+</details>
+
+---
+
+## 📞 联系方式 / Contact
+
+- **GitHub 仓库 / GitHub Repository**: https://github.com/lc2panda/mcp
+- **维护者 / Maintainer**: [lc2panda](https://github.com/lc2panda)
+- **最后更新 / Last Updated**: 2026-03-15
+
+---
+
+**🎉 此分支使得 Browser MCP 项目完全可独立构建和使用！**  
+*This fork makes Browser MCP project completely independent and usable!*
