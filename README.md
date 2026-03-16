@@ -44,7 +44,7 @@
 ```bash
 src/config/app.config.ts        # 应用配置 / Application configuration
 src/config/mcp.config.ts        # MCP 服务器配置 / MCP server configuration
-src/types/mcp/tool.ts           # 14 种工具类型 / Complete tool type definitions
+src/types/mcp/tool.ts           # 13 种工具类型 / Complete tool type definitions (13 tools)
 src/types/messages/ws.ts        # WebSocket 消息映射 / WebSocket message mappings
 src/messaging/types.ts          # 消息类型工具 / Message type utilities
 src/messaging/ws/sender.ts      # WebSocket 消息发送器 / WebSocket message sender
@@ -89,18 +89,14 @@ node dist/index.js --help
 }
 ```
 
-### 3. 连接浏览器扩展 / Connect Browser Extension
-**重要提示 / Important Note**: 此 fork 优化的是构建独立性，并非创建新的浏览器插件。  
-*This fork optimizes build independence, not creating a new browser extension.*
+### 3. 安装 Browser MCP Chrome 扩展 / Install Browser MCP Chrome Extension
+从 [https://browsermcp.io](https://browsermcp.io) 安装官方 **Browser MCP Chrome Extension**（外部扩展，本项目不包含）。
+Install the official **Browser MCP Chrome Extension** from [https://browsermcp.io](https://browsermcp.io) (external extension, not included in this project).
 
-**实际步骤 / Actual Steps**:
 1. 从 Chrome 网上应用店安装官方 Browser MCP 扩展 / Install official Browser MCP extension from Chrome Web Store
-2. 扩展图标固定后，点击 "Connect" / After pinning the extension icon, click "Connect"
-3. 系统会自动连接到本 MCP 服务器 / It will automatically connect to this MCP server
+2. 扩展图标固定后，点击 **Connect** / After pinning the extension icon, click **Connect**
+3. 系统会自动连接到本 MCP 服务器（ws://localhost:8765/ws） / It will automatically connect to this MCP server at ws://localhost:8765/ws
 4. 验证连接状态（扩展图标显示已连接） / Verify connection status (extension icon shows connected)
-
-**原因 / Why this is required**: Browser MCP 采用客户端‑扩展‑服务器三端架构：AI 客户端 ↔ MCP 服务器 ↔ Chrome 扩展。我们的优化集中在服务器端，扩展仍是必需的通信桥梁。  
-*Browser MCP uses a three‑end architecture: AI client ↔ MCP server ↔ Chrome extension. Our optimizations focus on the server side; the extension remains the essential communication bridge.*
 
 ---
 
@@ -151,6 +147,7 @@ node dist/index.js --help
 3. **WebSocket 服务器 / WebSocket Server**: 正确集成 HTTP+WebSocket 双服务
 4. **缺失配置 / Missing Configuration**: 创建 6 个缺失的配置文件
 5. **导入路径 / Import Paths**: 修复所有 `@repo/*` 引用
+6. **drag 工具注册 / Drag Tool Registration**: 修复 `snapshot.drag` 未加入 `snapshotTools` 数组
 
 ---
 
@@ -184,7 +181,7 @@ node dist/index.js --help
 
 - **GitHub 仓库 / GitHub Repository**: https://github.com/lc2panda/mcp
 - **维护者 / Maintainer**: [lc2panda](https://github.com/lc2panda)
-- **最后更新 / Last Updated**: 2026-03-15
+- **最后更新 / Last Updated**: 2026-03-16
 
 ---
 

@@ -59,7 +59,8 @@ export const ClickTool = {
     name: z.literal("click"),
     description: z.literal("Click on an element"),
     arguments: z.object({
-      selector: z.string().describe("CSS selector of the element to click"),
+      element: z.string().describe("Human-readable element description used to obtain permission to interact with the element"),
+      ref: z.string().describe("Exact target element reference from the page snapshot"),
     }),
   },
 };
@@ -69,7 +70,8 @@ export const HoverTool = {
     name: z.literal("hover"),
     description: z.literal("Hover over an element"),
     arguments: z.object({
-      selector: z.string().describe("CSS selector of the element to hover over"),
+      element: z.string().describe("Human-readable element description used to obtain permission to interact with the element"),
+      ref: z.string().describe("Exact target element reference from the page snapshot"),
     }),
   },
 };
@@ -79,8 +81,10 @@ export const TypeTool = {
     name: z.literal("type"),
     description: z.literal("Type text into an element"),
     arguments: z.object({
-      selector: z.string().describe("CSS selector of the element"),
-      text: z.string().describe("Text to type"),
+      element: z.string().describe("Human-readable element description used to obtain permission to interact with the element"),
+      ref: z.string().describe("Exact target element reference from the page snapshot"),
+      text: z.string().describe("Text to type into the element"),
+      submit: z.boolean().optional().describe("Whether to submit entered text (press Enter after)"),
     }),
   },
 };
@@ -90,8 +94,9 @@ export const SelectOptionTool = {
     name: z.literal("select_option"),
     description: z.literal("Select an option from a dropdown"),
     arguments: z.object({
-      selector: z.string().describe("CSS selector of the select element"),
-      value: z.string().describe("Value of the option to select"),
+      element: z.string().describe("Human-readable element description used to obtain permission to interact with the element"),
+      ref: z.string().describe("Exact target element reference from the page snapshot"),
+      values: z.array(z.string()).describe("Array of values to select in the dropdown"),
     }),
   },
 };
@@ -99,10 +104,12 @@ export const SelectOptionTool = {
 export const DragTool = {
   shape: {
     name: z.literal("drag"),
-    description: z.literal("Drag an element"),
+    description: z.literal("Perform drag and drop between two elements"),
     arguments: z.object({
-      selector: z.string().describe("CSS selector of the element to drag"),
-      direction: z.enum(["up", "down", "left", "right"]).describe("Direction to drag"),
+      startElement: z.string().describe("Human-readable source element description"),
+      startRef: z.string().describe("Exact source element reference from the page snapshot"),
+      endElement: z.string().describe("Human-readable target element description"),
+      endRef: z.string().describe("Exact target element reference from the page snapshot"),
     }),
   },
 };

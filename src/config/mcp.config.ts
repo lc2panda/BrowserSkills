@@ -1,9 +1,9 @@
 export const mcpConfig = {
   errors: {
-    noConnectedTab: "No connected tab"
+    noConnectedTab: "No tab is connected"
   },
   ws: {
-    path: "/ws",
-    port: 8765
+    path: "/",
+    port: 9009
   }
 } as const;

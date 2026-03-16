@@ -18,15 +18,20 @@ export function createSocketMessageSender<T extends Record<string, { request: an
           reject(new Error(`Timeout after ${options.timeoutMs}ms`));
         }, options.timeoutMs || 30000);
 
-        ws.send(JSON.stringify({ type, payload }));
+        const requestId = crypto.randomUUID();
+        ws.send(JSON.stringify({ type, id: requestId, payload }));
 
         const messageHandler = (data: Buffer) => {
           try {
             const message = JSON.parse(data.toString());
-            if (message.type === type) {
+            if (message.type === "messageResponse" && message.payload?.requestId === requestId) {
               clearTimeout(timeout);
               ws.off("message", messageHandler);
-              resolve(message.payload as T[K]["response"]);
+              if (message.payload.error) {
+                reject(new Error(message.payload.error.message || String(message.payload.error)));
+              } else {
+                resolve(message.payload.result as T[K]["response"]);
+              }
             }
           } catch (error) {
             // Ignore invalid messages

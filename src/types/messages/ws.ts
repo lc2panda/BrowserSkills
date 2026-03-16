@@ -13,24 +13,24 @@ export type SocketMessageMap = {
     response: { success: boolean };
   };
   'browser_click': {
-    request: { selector: string };
-    response: { success: boolean };
+    request: { element: string; ref: string };
+    response: unknown;
   };
   'browser_drag': {
-    request: { selector: string; direction: string };
-    response: { success: boolean };
+    request: { startElement: string; startRef: string; endElement: string; endRef: string; direction?: string };
+    response: unknown;
   };
   'browser_hover': {
-    request: { selector: string };
-    response: { success: boolean };
+    request: { element: string; ref: string };
+    response: unknown;
   };
   'browser_type': {
-    request: { selector: string; text: string };
-    response: { success: boolean };
+    request: { element: string; ref: string; text: string; submit?: boolean };
+    response: unknown;
   };
   'browser_select_option': {
-    request: { selector: string; value: string };
-    response: { success: boolean };
+    request: { element: string; ref: string; values: string[] };
+    response: unknown;
   };
   'browser_screenshot': {
     request: { selector?: string };

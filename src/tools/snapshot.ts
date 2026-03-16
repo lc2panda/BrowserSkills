@@ -39,7 +39,7 @@ export const click: Tool = {
       content: [
         {
           type: "text",
-          text: `Clicked element with selector "${validatedParams.selector}"`,
+          text: `Clicked element "${validatedParams.element}" [ref=${validatedParams.ref}]`,
         },
         ...snapshot.content,
       ],
@@ -61,7 +61,7 @@ export const drag: Tool = {
       content: [
         {
           type: "text",
-          text: `Dragged element with selector "${validatedParams.selector}" in direction "${validatedParams.direction}"`,
+          text: `Dragged element "${validatedParams.startElement}" [ref=${validatedParams.startRef}] to "${validatedParams.endElement}" [ref=${validatedParams.endRef}]`,
         },
         ...snapshot.content,
       ],
@@ -83,7 +83,7 @@ export const hover: Tool = {
       content: [
         {
           type: "text",
-          text: `Hovered over element with selector "${validatedParams.selector}"`,
+          text: `Hovered over element "${validatedParams.element}" [ref=${validatedParams.ref}]`,
         },
         ...snapshot.content,
       ],
@@ -105,7 +105,7 @@ export const type: Tool = {
       content: [
         {
           type: "text",
-          text: `Typed "${validatedParams.text}" into element with selector "${validatedParams.selector}"`,
+          text: `Typed "${validatedParams.text}" into element "${validatedParams.element}" [ref=${validatedParams.ref}]`,
         },
         ...snapshot.content,
       ],
@@ -127,7 +127,7 @@ export const selectOption: Tool = {
       content: [
         {
           type: "text",
-          text: `Selected option with value "${validatedParams.value}" in element with selector "${validatedParams.selector}"`,
+          text: `Selected option(s) "${validatedParams.values.join(', ')}" in element "${validatedParams.element}" [ref=${validatedParams.ref}]`,
         },
         ...snapshot.content,
       ],
