@@ -11,12 +11,12 @@ export function createSocketMessageSender<T extends Record<string, { request: an
     sendSocketMessage: async <K extends keyof T>(
       type: K,
       payload: T[K]["request"],
-      options: SocketMessageSenderOptions = { timeoutMs: 30000 },
+      options: SocketMessageSenderOptions = { timeoutMs: 600000 },
     ): Promise<T[K]["response"]> => {
       return new Promise((resolve, reject) => {
         const timeout = setTimeout(() => {
           reject(new Error(`Timeout after ${options.timeoutMs}ms`));
-        }, options.timeoutMs || 30000);
+        }, options.timeoutMs || 600000);
 
         const requestId = crypto.randomUUID();
         ws.send(JSON.stringify({ type, id: requestId, payload }));

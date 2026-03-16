@@ -28,7 +28,7 @@ export class Context {
   async sendSocketMessage<T extends keyof SocketMessageMap>(
     type: T,
     payload: SocketMessageMap[T]["request"],
-    options: { timeoutMs?: number } = { timeoutMs: 30000 },
+    options: { timeoutMs?: number } = { timeoutMs: 600000 },
   ) {
     const { sendSocketMessage } = createSocketMessageSender<SocketMessageMap>(
       this.ws,
