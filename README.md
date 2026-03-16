@@ -104,17 +104,7 @@ node dist/index.js --help
 
 ---
 
-## 🧪 功能测试 / Functional Testing
 
-```javascript
-// 示例测试代码 / Example test code
-await navigate("https://google.com")
-await type("input[name='q']", "OpenClaw")
-await click("input[value='Google 搜索']")
-await wait(3000)
-const snapshot = await snapshot()
-const screenshot = await screenshot()
-```
 
 ## 📋 验证清单 / Verification Checklist
 
@@ -144,23 +134,12 @@ const screenshot = await screenshot()
 | 文档 | 描述 |
 |------|------|
 | [README_CN.md](README_CN.md) | 完整中文文档 / Full Chinese documentation |
-| [TESTING.md](TESTING.md) | 测试报告 / Testing report |
-| [TEST_CLAUDE_CODE.md](TEST_CLAUDE_CODE.md) | Claude Code 集成指南 / Claude Code integration guide |
 
 ---
 
-## 🚀 一键安装脚本 / One-Click Setup
 
-```bash
-# 运行安装脚本 / Run setup script
-./setup-and-test.sh
-```
 
-脚本会自动：
-- ✅ 构建项目 / Build the project
-- ✅ 配置 MCP 客户端 / Configure MCP client
-- ✅ 启动服务器 / Start the server
-- ✅ 提供测试指南 / Provide testing guidance
+
 
 ---
 
@@ -183,7 +162,6 @@ const screenshot = await screenshot()
 | **TypeScript 检查** / TypeScript Checking | ✅ 通过 / Passed |
 | **Chrome 扩展兼容** / Chrome Extension Compatibility | ✅ 已验证 / Verified |
 | **服务器运行** / Server Running | ✅ 正常 / Normal |
-| **功能测试** / Functional Testing | 🔄 待验证 / Pending |
 
 ---
 
