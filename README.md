@@ -90,9 +90,17 @@ node dist/index.js --help
 ```
 
 ### 3. 连接浏览器扩展 / Connect Browser Extension
-1. 安装 Chrome 扩展 / Install Chrome extension
-2. 固定扩展并点击 "Connect" / Pin extension and click "Connect"
-3. 验证连接状态 / Verify connection status
+**重要提示 / Important Note**: 此 fork 优化的是构建独立性，并非创建新的浏览器插件。  
+*This fork optimizes build independence, not creating a new browser extension.*
+
+**实际步骤 / Actual Steps**:
+1. 从 Chrome 网上应用店安装官方 Browser MCP 扩展 / Install official Browser MCP extension from Chrome Web Store
+2. 扩展图标固定后，点击 "Connect" / After pinning the extension icon, click "Connect"
+3. 系统会自动连接到本 MCP 服务器 / It will automatically connect to this MCP server
+4. 验证连接状态（扩展图标显示已连接） / Verify connection status (extension icon shows connected)
+
+**原因 / Why this is required**: Browser MCP 采用客户端‑扩展‑服务器三端架构：AI 客户端 ↔ MCP 服务器 ↔ Chrome 扩展。我们的优化集中在服务器端，扩展仍是必需的通信桥梁。  
+*Browser MCP uses a three‑end architecture: AI client ↔ MCP server ↔ Chrome extension. Our optimizations focus on the server side; the extension remains the essential communication bridge.*
 
 ---
 
