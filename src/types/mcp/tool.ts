@@ -101,6 +101,19 @@ export const SelectOptionTool = {
   },
 };
 
+export const ScrollTool = {
+  shape: {
+    name: z.literal("scroll"),
+    description: z.literal("Scroll the page or a scrollable element"),
+    arguments: z.object({
+      x: z.number().describe("X coordinate to scroll at (pixels from left)"),
+      y: z.number().describe("Y coordinate to scroll at (pixels from top)"),
+      deltaX: z.number().describe("Horizontal scroll distance in pixels (positive = right, negative = left)"),
+      deltaY: z.number().describe("Vertical scroll distance in pixels (positive = down, negative = up)"),
+    }),
+  },
+};
+
 export const DragTool = {
   shape: {
     name: z.literal("drag"),

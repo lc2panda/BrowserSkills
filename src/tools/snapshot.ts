@@ -4,6 +4,7 @@ import {
   ClickTool,
   DragTool,
   HoverTool,
+  ScrollTool,
   SelectOptionTool,
   SnapshotTool,
   TypeTool,
@@ -130,6 +131,28 @@ export const selectOption: Tool = {
           text: `Selected option(s) "${validatedParams.values.join(', ')}" in element "${validatedParams.element}" [ref=${validatedParams.ref}]`,
         },
         ...snapshot.content,
+      ],
+    };
+  },
+};
+
+export const scroll: Tool = {
+  schema: {
+    name: ScrollTool.shape.name.value,
+    description: ScrollTool.shape.description.value,
+    inputSchema: zodToJsonSchema(ScrollTool.shape.arguments),
+  },
+  handle: async (context: Context, params) => {
+    const validatedParams = ScrollTool.shape.arguments.parse(params);
+    await context.sendSocketMessage("browser_scroll", validatedParams);
+    const snapshotResult = await captureAriaSnapshot(context);
+    return {
+      content: [
+        {
+          type: "text",
+          text: `Scrolled at (${validatedParams.x}, ${validatedParams.y}) by delta (${validatedParams.deltaX}, ${validatedParams.deltaY})`,
+        },
+        ...snapshotResult.content,
       ],
     };
   },

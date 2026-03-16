@@ -36,6 +36,7 @@ const snapshotTools: Tool[] = [
   snapshot.type,
   snapshot.selectOption,
   snapshot.drag,
+  snapshot.scroll,
   ...commonTools,
   ...customTools,
 ];

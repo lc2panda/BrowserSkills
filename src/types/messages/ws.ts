@@ -60,6 +60,10 @@ export type SocketMessageMap = {
     request: { key: string };
     response: { success: boolean };
   };
+  'browser_scroll': {
+    request: { x: number; y: number; deltaX: number; deltaY: number };
+    response: { success: boolean };
+  };
   'getUrl': {
     request: {};
     response: { url: string };
