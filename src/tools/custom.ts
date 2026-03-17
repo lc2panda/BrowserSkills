@@ -15,10 +15,11 @@ export const getConsoleLogs: Tool = {
       "browser_get_console_logs",
       {},
     );
-    const consoleLogs = (response as { logs: any[] }).logs;
-    const text: string = consoleLogs
-      .map((log) => JSON.stringify(log))
-      .join("\n");
+    const raw = response as { logs?: any[] } | any[];
+    const consoleLogs: any[] = Array.isArray(raw) ? raw : (raw?.logs ?? []);
+    const text: string = consoleLogs.length
+      ? consoleLogs.map((log) => JSON.stringify(log)).join("\n")
+      : "(no console logs)";
     return {
       content: [{ type: "text", text }],
     };
@@ -36,7 +37,7 @@ export const screenshot: Tool = {
       "browser_screenshot",
       {},
     );
-    const screenshotData = (response as { data: string }).data;
+    const screenshotData = typeof response === 'string' ? response : (response as { data: string }).data;
     return {
       content: [
         {
