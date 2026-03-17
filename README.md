@@ -1,194 +1,190 @@
-# 🚀 Browser MCP - 独立构建分支
+# Browser MCP — 可独立构建的浏览器自动化 MCP 服务器
 
-<a href="https://browsermcp.io">
-  <img src="./.github/images/banner.png" alt="Browser MCP banner">
-</a>
-
-<h3 align="center">Browser MCP - 浏览器自动化 MCP 服务器</h3>
-
-<p align="center">
-  Automate your browser with AI. / 使用 AI 自动化您的浏览器
-  <br />
-  <a href="https://browsermcp.io"><strong>Official Website</strong></a> 
-  •
-  <a href="https://docs.browsermcp.io"><strong>Documentation</strong></a>
-  •
-  <a href="README_CN.md"><strong>中文完整版</strong></a>
-</p>
+> **给人类**：这是 [Browser MCP](https://browsermcp.io) 的独立构建分支，修复了原项目无法脱离 Monorepo 独立构建的问题，并新增 scroll、fullpage_screenshot 等工具，同时将项目打包为 Claude Code **Skill**，AI 助手可自动完成全套部署。详见下方说明。
+>
+> **维护者**：[lc2panda](https://github.com/lc2panda/mcp) · **最后更新**：2026-03-17
 
 ---
 
-## 🌟 主要特点 / Key Features
+# AI DEPLOYMENT GUIDE
 
-| 特点 | 说明 |
-|------|------|
-| ⚡ **快速 / Fast** | 本地自动化，无网络延迟 / Local automation, no network latency |
-| 🔒 **私密 / Private** | 数据保留在本地设备 / Data stays on your local device |
-| 👤 **保持登录 / Logged In** | 使用现有浏览器配置文件 / Uses your existing browser profile |
-| 🥷 **防检测 / Stealth** | 使用真实浏览器指纹 / Uses real browser fingerprint |
+> The following sections are structured for AI agents. Read and execute each step in order to fully deploy Browser MCP with the bundled skill.
+
+## STEP 0 — Understand the Architecture
+
+This project has two components:
+
+| Component | Role |
+|-----------|------|
+| **MCP Server** (`dist/index.js`) | Node.js process that exposes 15 browser tools via MCP stdio protocol |
+| **Chrome Extension** | Runs inside Chrome, bridges CDP ↔ WebSocket on port `9009` |
+| **Skill** (`skill/`) | Claude Code skill definition — copy to `~/.claude/skills/browser-mcp/` |
+
+Flow: `AI client → MCP Server (stdio) → WebSocket :9009 → Chrome Extension → CDP → Browser`
 
 ---
 
-## 🔧 分支优化 / Fork Optimizations
+## STEP 1 — Check Prerequisites
 
-**此分支解决了原项目的主要限制：独立构建能力。**  
-*This fork resolves the main limitation of the original project: independent build capability.*
-
-### ✅ 已完成的优化 / Optimizations Made
-
-#### 1. **移除 Monorepo 依赖 / Removed Monorepo Dependencies**
-- ✅ 移除所有 `workspace:*` 依赖
-- ✅ Eliminated all `workspace:*` dependencies
-
-#### 2. **创建缺失配置文件 / Added Missing Configuration Files**
 ```bash
-src/config/app.config.ts        # 应用配置 / Application configuration
-src/config/mcp.config.ts        # MCP 服务器配置 / MCP server configuration
-src/types/mcp/tool.ts           # 15 种工具类型 / Complete tool type definitions (15 tools)
-src/types/messages/ws.ts        # WebSocket 消息映射 / WebSocket message mappings
-src/messaging/types.ts          # 消息类型工具 / Message type utilities
-src/messaging/ws/sender.ts      # WebSocket 消息发送器 / WebSocket message sender
+# Required: Node.js 18+
+node --version
+
+# Required: npm
+npm --version
+
+# Required: Chrome browser with Browser MCP extension installed
+# Extension: https://browsermcp.io (install from Chrome Web Store)
 ```
 
-#### 3. **技术兼容性 / Technical Compatibility**
-- ✅ TypeScript 严格检查通过 / Passes strict TypeScript checking
-- ✅ 可独立成功构建 / Successfully builds standalone
-- ✅ 兼容官方 Chrome 扩展 / Compatible with official Chrome extension
+If Node.js is missing, install it before proceeding.
 
 ---
 
-## 🛠️ 快速开始 / Quick Start
+## STEP 2 — Clone and Build
 
-### 1. 克隆并构建 / Clone & Build
 ```bash
-# 克隆此仓库 / Clone this repository
 git clone https://github.com/lc2panda/mcp.git
 cd mcp
-
-# 安装依赖 / Install dependencies
 npm install
-
-# 构建 MCP 服务器 / Build the MCP server
 npm run build
 
-# 测试服务器 / Test the server (shows help)
-node dist/index.js --help
+# Verify build succeeded
+node dist/index.js --version
 ```
 
-### 2. 配置 MCP 客户端 / Configure MCP Client
+Expected output: version string like `0.1.3`
+
+---
+
+## STEP 3 — Install the Claude Code Skill
+
+The `skill/` directory contains the browser-mcp skill definition. Copy it to the Claude Code skills directory:
+
+```bash
+# Create skills directory if it doesn't exist
+mkdir -p ~/.claude/skills/browser-mcp/references
+
+# Copy skill files
+cp skill/SKILL.md ~/.claude/skills/browser-mcp/
+cp skill/_meta.json ~/.claude/skills/browser-mcp/
+cp skill/metadata.json ~/.claude/skills/browser-mcp/
+cp skill/references/tools-reference.md ~/.claude/skills/browser-mcp/references/
+cp skill/references/workflows.md ~/.claude/skills/browser-mcp/references/
+
+echo "Skill installed at ~/.claude/skills/browser-mcp/"
+```
+
+After this step, the `browser-mcp` skill will be available in Claude Code sessions.
+
+---
+
+## STEP 4 — Configure MCP Client
+
+Add the server to your AI client's MCP configuration. Replace `/absolute/path/to/mcp` with the actual path.
+
+### Claude Code (`~/.claude/claude_desktop_config.json` or project config)
 ```json
-// 在 AI 应用中配置 / Add to your AI app's MCP configuration
 {
   "mcpServers": {
     "browsermcp": {
       "command": "node",
-      "args": ["/path/to/mcp/dist/index.js"],
-      "env": {}
+      "args": ["/absolute/path/to/mcp/dist/index.js"]
     }
   }
 }
 ```
 
-### 3. 安装 Browser MCP Chrome 扩展 / Install Browser MCP Chrome Extension
-从 [https://browsermcp.io](https://browsermcp.io) 安装官方 **Browser MCP Chrome Extension**（外部扩展，本项目不包含）。
-Install the official **Browser MCP Chrome Extension** from [https://browsermcp.io](https://browsermcp.io) (external extension, not included in this project).
-
-1. 从 Chrome 网上应用店安装官方 Browser MCP 扩展 / Install official Browser MCP extension from Chrome Web Store
-2. 扩展图标固定后，点击 **Connect** / After pinning the extension icon, click **Connect**
-3. 系统会自动连接到本 MCP 服务器（ws://localhost:9009/） / It will automatically connect to this MCP server at ws://localhost:9009/
-4. 验证连接状态（扩展图标显示已连接） / Verify connection status (extension icon shows connected)
-
----
-
-
-
-## 📋 验证清单 / Verification Checklist
-
-- [ ] MCP 服务器成功构建 / MCP server builds successfully
-- [ ] TypeScript 检查通过 / TypeScript checks pass
-- [ ] Chrome 扩展已连接 / Chrome extension connected
-- [ ] AI 应用配置完成 / AI application configured
-- [ ] 浏览器自动化工作正常 / Browser automation works as expected
-
----
-
-## 🐛 问题报告 / Issue Reporting
-
-### 常见问题 / Common Issues
-1. **连接失败 / Connection Failed**
-   - 检查服务器是否运行 / Check if server is running: `node dist/index.js`
-   - 检查端口 9009 是否可用 / Check if port 9009 is available
-
-2. **工具不可用 / Tools Not Available**
-   - 重启 MCP 客户端 / Restart MCP client
-   - 验证配置文件路径 / Verify configuration file path
-
----
-
-## 📄 文档资源 / Documentation Resources
-
-| 文档 | 描述 |
-|------|------|
-| [README_CN.md](README_CN.md) | 完整中文文档 / Full Chinese documentation |
-
----
-
-
-
-
-
----
-
-## 🤝 技术贡献 / Technical Contributions
-
-### 修复的关键问题 / Key Issues Fixed
-1. **递归调用问题 / Recursive Call Issue**: `server.close` 方法修复
-2. **系统依赖问题 / System Dependency Issue**: 移除 `lsof` 依赖
-3. **WebSocket 服务器 / WebSocket Server**: 正确集成 HTTP+WebSocket 双服务
-4. **缺失配置 / Missing Configuration**: 创建 6 个缺失的配置文件
-5. **导入路径 / Import Paths**: 修复所有 `@repo/*` 引用
-6. **drag 工具注册 / Drag Tool Registration**: 修复 `snapshot.drag` 未加入 `snapshotTools` 数组
-7. **超时时间 / Timeout**: 默认超时从 30s 延长至 10min，支持长时间操作
-8. **scroll 工具 / Scroll Tool**: 新增页面滚动工具
-9. **fullpage_screenshot 工具 / Fullpage Screenshot**: 新增全页截图，支持超出视窗内容
-10. **响应格式兼容 / Response Format**: 兼容 array 和 {result} 两种响应格式
-
----
-
-## 📊 项目状态 / Project Status
-
-| 项目指标 | 状态 |
-|----------|------|
-| **独立构建** / Independent Build | ✅ 完成 / Complete |
-| **TypeScript 检查** / TypeScript Checking | ✅ 通过 / Passed |
-| **Chrome 扩展兼容** / Chrome Extension Compatibility | ✅ 已验证 / Verified |
-| **服务器运行** / Server Running | ✅ 正常 / Normal |
-
----
-
-<details>
-<summary><strong>📜 完整提交记录 / Complete Commit History</strong></summary>
-
-```bash
-# 最新提交记录 / Latest commits
-f32c5fa feat: add fullpage screenshot; clean up gitignore
-2db6a12 feat: add fullpage_screenshot tool with Page.captureScreenshot captureBeyondViewport
-a57c222 fix: correctly extract plain string from browser_snapshot/getUrl/getTitle responses
-12cc223 fix: handle both array and {logs} response shapes in getConsoleLogs
-a71001e feat: add scroll tool for complete browser interaction capability
+### Cursor / VS Code (`mcp.json`)
+```json
+{
+  "mcpServers": {
+    "browsermcp": {
+      "command": "node",
+      "args": ["/absolute/path/to/mcp/dist/index.js"]
+    }
+  }
+}
 ```
 
-</details>
+> The MCP server listens on WebSocket port `9009` for the Chrome extension. No additional port configuration is needed.
 
 ---
 
-## 📞 联系方式 / Contact
+## STEP 5 — Connect Chrome Extension
 
-- **GitHub 仓库 / GitHub Repository**: https://github.com/lc2panda/mcp
-- **维护者 / Maintainer**: [lc2panda](https://github.com/lc2panda)
-- **最后更新 / Last Updated**: 2026-03-17
+1. Open Chrome and navigate to any page
+2. Click the **Browser MCP** extension icon in the toolbar
+3. Click **Connect**
+4. The extension status should show **Connected**
+
+The extension creates a WebSocket connection to `ws://localhost:9009/`.
 
 ---
 
-**🎉 此分支使得 Browser MCP 项目完全可独立构建和使用！**  
-*This fork makes Browser MCP project completely independent and usable!*
+## STEP 6 — Verify Installation
+
+After restarting the AI client, run a verification:
+
+```
+# In Claude Code or your AI client:
+/browser-mcp
+```
+
+Or ask the AI:
+> "使用 browser-mcp 导航到 https://example.com 并截图"
+
+Expected behavior:
+- AI uses `mcp__browsermcp__navigate` tool
+- AI uses `mcp__browsermcp__fullpage_screenshot` tool
+- Screenshot saved to system temp dir: `/var/folders/.../T/fullpage_{timestamp}.jpg`
+
+---
+
+## TOOL REFERENCE (15 tools)
+
+| Tool | Description | Key Params |
+|------|-------------|------------|
+| `navigate` | Navigate to URL | `url` |
+| `go_back` | Browser back | — |
+| `go_forward` | Browser forward | — |
+| `snapshot` | Get ARIA snapshot + refs | — |
+| `click` | Click element | `element`, `ref` |
+| `hover` | Hover element | `element`, `ref` |
+| `type` | Type text | `element`, `ref`, `text` |
+| `select_option` | Select dropdown | `element`, `ref`, `values` |
+| `drag` | Drag & drop | `startElement`, `startRef`, `endElement`, `endRef` |
+| `scroll` | Scroll page | `x`, `y`, `deltaX`, `deltaY` |
+| `press_key` | Press key | `key` |
+| `wait` | Wait N seconds | `time` (0–60) |
+| `get_console_logs` | Get browser console | — |
+| `screenshot` | Viewport screenshot | — |
+| `fullpage_screenshot` | Full-page screenshot | — |
+
+All tools use the prefix `mcp__browsermcp__` when called.
+
+---
+
+## TROUBLESHOOTING
+
+| Problem | Cause | Fix |
+|---------|-------|-----|
+| Tools not available | Extension not connected | Click extension icon → Connect |
+| Port 9009 in use | Another process | `lsof -i:9009` to identify |
+| `ref` invalid | Page changed after snapshot | Re-run `snapshot` |
+| Screenshot blank | Page not loaded | Add `wait {time: 2}` before screenshot |
+| Build fails | Missing deps | Run `npm install` again |
+
+---
+
+## FORK CHANGES vs ORIGINAL
+
+1. Removed Monorepo dependencies — standalone `npm install && npm run build`
+2. Fixed all `@repo/*` imports → `@/*` paths
+3. Fixed WebSocket protocol (port `9009`, `messageResponse` format)
+4. Fixed `drag` tool not registered in `snapshotTools`
+5. Increased default timeout `30s → 10min`
+6. Added `scroll` tool
+7. Added `fullpage_screenshot` tool (CDP `captureBeyondViewport: true`)
+8. Fixed response normalization for `getConsoleLogs` / `getUrl` / `getTitle`
+9. Bundled Claude Code skill in `skill/`

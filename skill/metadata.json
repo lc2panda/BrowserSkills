@@ -1,0 +1,9 @@
+{
+  "name": "browser-mcp",
+  "version": "1.0.0",
+  "description": "Browser automation skill with 15 tools powered by Browser MCP Chrome extension.",
+  "tools": 15,
+  "ws_port": 9009,
+  "requires_extension": true,
+  "extension": "Browser MCP Chrome Extension"
+}
