@@ -44,7 +44,7 @@
 ```bash
 src/config/app.config.ts        # 应用配置 / Application configuration
 src/config/mcp.config.ts        # MCP 服务器配置 / MCP server configuration
-src/types/mcp/tool.ts           # 13 种工具类型 / Complete tool type definitions (13 tools)
+src/types/mcp/tool.ts           # 15 种工具类型 / Complete tool type definitions (15 tools)
 src/types/messages/ws.ts        # WebSocket 消息映射 / WebSocket message mappings
 src/messaging/types.ts          # 消息类型工具 / Message type utilities
 src/messaging/ws/sender.ts      # WebSocket 消息发送器 / WebSocket message sender
@@ -95,7 +95,7 @@ Install the official **Browser MCP Chrome Extension** from [https://browsermcp.i
 
 1. 从 Chrome 网上应用店安装官方 Browser MCP 扩展 / Install official Browser MCP extension from Chrome Web Store
 2. 扩展图标固定后，点击 **Connect** / After pinning the extension icon, click **Connect**
-3. 系统会自动连接到本 MCP 服务器（ws://localhost:8765/ws） / It will automatically connect to this MCP server at ws://localhost:8765/ws
+3. 系统会自动连接到本 MCP 服务器（ws://localhost:9009/） / It will automatically connect to this MCP server at ws://localhost:9009/
 4. 验证连接状态（扩展图标显示已连接） / Verify connection status (extension icon shows connected)
 
 ---
@@ -117,7 +117,7 @@ Install the official **Browser MCP Chrome Extension** from [https://browsermcp.i
 ### 常见问题 / Common Issues
 1. **连接失败 / Connection Failed**
    - 检查服务器是否运行 / Check if server is running: `node dist/index.js`
-   - 检查端口 8765 是否可用 / Check if port 8765 is available
+   - 检查端口 9009 是否可用 / Check if port 9009 is available
 
 2. **工具不可用 / Tools Not Available**
    - 重启 MCP 客户端 / Restart MCP client
@@ -148,6 +148,10 @@ Install the official **Browser MCP Chrome Extension** from [https://browsermcp.i
 4. **缺失配置 / Missing Configuration**: 创建 6 个缺失的配置文件
 5. **导入路径 / Import Paths**: 修复所有 `@repo/*` 引用
 6. **drag 工具注册 / Drag Tool Registration**: 修复 `snapshot.drag` 未加入 `snapshotTools` 数组
+7. **超时时间 / Timeout**: 默认超时从 30s 延长至 10min，支持长时间操作
+8. **scroll 工具 / Scroll Tool**: 新增页面滚动工具
+9. **fullpage_screenshot 工具 / Fullpage Screenshot**: 新增全页截图，支持超出视窗内容
+10. **响应格式兼容 / Response Format**: 兼容 array 和 {result} 两种响应格式
 
 ---
 
@@ -167,10 +171,11 @@ Install the official **Browser MCP Chrome Extension** from [https://browsermcp.i
 
 ```bash
 # 最新提交记录 / Latest commits
-63bc5ca [FINAL BUGFIX] Complete WebSocket server and final fixes
-3eca73e [DOCS] Update README with fork optimizations and installation guide  
-52e67a9 [BUGFIX] Make project independently buildable
-9db12f2 chore: version 0.1.3 (original commit)
+f32c5fa feat: add fullpage screenshot; clean up gitignore
+2db6a12 feat: add fullpage_screenshot tool with Page.captureScreenshot captureBeyondViewport
+a57c222 fix: correctly extract plain string from browser_snapshot/getUrl/getTitle responses
+12cc223 fix: handle both array and {logs} response shapes in getConsoleLogs
+a71001e feat: add scroll tool for complete browser interaction capability
 ```
 
 </details>
@@ -181,7 +186,7 @@ Install the official **Browser MCP Chrome Extension** from [https://browsermcp.i
 
 - **GitHub 仓库 / GitHub Repository**: https://github.com/lc2panda/mcp
 - **维护者 / Maintainer**: [lc2panda](https://github.com/lc2panda)
-- **最后更新 / Last Updated**: 2026-03-16
+- **最后更新 / Last Updated**: 2026-03-17
 
 ---
 

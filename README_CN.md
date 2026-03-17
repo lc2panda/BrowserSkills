@@ -36,7 +36,7 @@ Browser MCP 是一个 **MCP Server**，通过配合官方 Browser MCP Chrome 扩
 2. **添加缺失的配置文件**
    - `src/config/app.config.ts` - 应用配置
    - `src/config/mcp.config.ts` - MCP 服务器配置
-   - `src/types/mcp/tool.ts` - 完整的工具类型定义（13种工具）
+   - `src/types/mcp/tool.ts` - 完整的工具类型定义（15种工具）
    - `src/types/messages/ws.ts` - WebSocket 消息映射
    - `src/messaging/types.ts` - 消息类型工具
    - `src/messaging/ws/sender.ts` - WebSocket 消息发送器
@@ -51,7 +51,20 @@ Browser MCP 是一个 **MCP Server**，通过配合官方 Browser MCP Chrome 扩
 
 5. **修复 drag 工具注册**
    - 将 `snapshot.drag` 加入 `snapshotTools` 数组（`src/index.ts`）
-   - 重新构建验证，`tools/list` 现返回完整 13 个工具
+   - 重新构建验证，`tools/list` 现返回完整 15 个工具
+
+6. **超时时间延长**
+   - 默认超时从 30s 延长至 10min（600000ms），支持复杂长时间操作
+
+7. **新增 scroll 工具**
+   - 支持页面滚动，实现完整浏览器交互能力
+
+8. **新增 fullpage_screenshot 工具**
+   - 使用 `Page.captureScreenshot` + `captureBeyondViewport: true`
+   - 可截取超出视窗的完整页面内容
+
+9. **响应格式兼容**
+   - 兼容 array 和 `{result}` 两种 WebSocket 响应格式
 
 ## 🛠 安装与设置
 
@@ -92,7 +105,7 @@ node dist/index.js --help
 ```
 
 ### **4. 开始自动化**
-- MCP 服务器默认运行在端口 `8765`
+- MCP 服务器默认运行在端口 `9009`
 - 通过扩展连接浏览器标签页
 - 使用 AI 工具自动化浏览器操作
 
@@ -118,7 +131,7 @@ node dist/index.js --help
 如果遇到问题，请检查：
 1. Chrome 扩展是否已安装并连接
 2. MCP 服务器是否正在运行 (`node dist/index.js`)
-3. 端口 `8765` 是否可用于 WebSocket 连接
+3. 端口 `9009` 是否可用于 WebSocket 连接
 4. AI 应用是否有正确的 MCP 配置
 
 ---
@@ -216,7 +229,7 @@ Add to your AI app's MCP server configuration:
 ```
 
 ### **4. Start Automating**
-- The MCP server runs on port `8765` by default
+- The MCP server runs on port `9009` by default
 - Connect browser tabs via the extension
 - Use AI tools to automate browser actions
 
@@ -242,7 +255,7 @@ Add to your AI app's MCP server configuration:
 If you encounter issues, check:
 1. Chrome extension is installed and connected
 2. MCP server is running (`node dist/index.js`)
-3. Port `8765` is available for WebSocket connections
+3. Port `9009` is available for WebSocket connections
 4. AI application has proper MCP configuration
 
 ---
@@ -259,4 +272,4 @@ Browser MCP was adapted from the [Playwright MCP server](https://github.com/micr
 *本分支解决了原项目无法独立构建的问题，提供完整的中文文档和使用指南。*
 
 **项目维护者**: [lc2panda](https://github.com/lc2panda)
-**最后更新**: 2026-03-15
+**最后更新**: 2026-03-17
