@@ -36,6 +36,10 @@ export type SocketMessageMap = {
     request: { selector?: string };
     response: { data: string }; // base64 encoded image
   };
+  'browser_fullpage_screenshot': {
+    request: {};
+    response: { data: string }; // base64 encoded full-page image
+  };
   'browser_get_console_logs': {
     request: {};
     response: { logs: Array<{ level: string; message: string; timestamp: number }> };

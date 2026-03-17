@@ -144,3 +144,11 @@ export const ScreenshotTool = {
     }),
   },
 };
+
+export const FullpageScreenshotTool = {
+  shape: {
+    name: z.literal("fullpage_screenshot"),
+    description: z.literal("Take a full-page screenshot capturing the entire page height"),
+    arguments: z.object({}),
+  },
+};
