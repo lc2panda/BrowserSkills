@@ -34,3 +34,18 @@ yarn-error.log*
 # Misc
 .DS_Store
 *.pem
+
+# Lock files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Local test scripts
+take_fullpage.mjs
+test_fullpage.mjs
+test_mcp.js
+
+# Browser extension binaries & extracted content
+*.crx
+*.zip
+crx_extracted/

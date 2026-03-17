@@ -1,4 +1,7 @@
 import { zodToJsonSchema } from "zod-to-json-schema";
+import { writeFileSync } from "fs";
+import { join } from "path";
+import { tmpdir } from "os";
 
 import { FullpageScreenshotTool, GetConsoleLogsTool, ScreenshotTool } from "@/types/mcp/tool";
 
@@ -62,12 +65,16 @@ export const fullpageScreenshot: Tool = {
       {},
     );
     const screenshotData = typeof response === 'string' ? response : (response as { data: string }).data;
+    // Save to disk for local verification
+    const outPath = join(tmpdir(), `fullpage_${Date.now()}.jpg`);
+    writeFileSync(outPath, Buffer.from(screenshotData, 'base64'));
+    console.error(`[fullpage_screenshot] saved to: ${outPath}`);
     return {
       content: [
         {
           type: "image",
           data: screenshotData,
-          mimeType: "image/png",
+          mimeType: "image/jpeg",
         },
       ],
     };
