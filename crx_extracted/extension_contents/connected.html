@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Browser Skills — 已连接</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #0f1117;
+    color: #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+  .card {
+    text-align: center;
+    padding: 48px 56px;
+    background: #1a1d27;
+    border: 1px solid #2d3148;
+    border-radius: 16px;
+    max-width: 480px;
+    width: 90%;
+  }
+  .dot {
+    width: 14px; height: 14px;
+    background: #22c55e;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 8px;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  .status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    color: #22c55e;
+    margin-bottom: 24px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #f8fafc;
+  }
+  p {
+    font-size: 14px;
+    color: #94a3b8;
+    line-height: 1.7;
+    margin-bottom: 32px;
+  }
+  .tools {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .tool {
+    background: #0f1117;
+    border: 1px solid #2d3148;
+    border-radius: 8px;
+    padding: 8px 6px;
+    font-size: 11px;
+    color: #64748b;
+    font-family: monospace;
+  }
+  .footer {
+    margin-top: 32px;
+    font-size: 12px;
+    color: #334155;
+  }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="status"><span class="dot"></span>已连接 · 纯本地运行</div>
+  <h1>Browser Skills</h1>
+  <p>扩展已就绪，AI 客户端可通过 MCP 协议控制此浏览器。<br>WebSocket 监听端口 <strong style="color:#e2e8f0">9009</strong></p>
+  <div class="tools">
+    <div class="tool">navigate</div>
+    <div class="tool">snapshot</div>
+    <div class="tool">click</div>
+    <div class="tool">type</div>
+    <div class="tool">scroll</div>
+    <div class="tool">screenshot</div>
+    <div class="tool">fullpage</div>
+    <div class="tool">drag</div>
+    <div class="tool">press_key</div>
+    <div class="tool">wait</div>
+    <div class="tool">get_logs</div>
+    <div class="tool">go_back</div>
+  </div>
+  <div class="footer">Browser Skills · 本地构建 · 无遥测</div>
+</div>
+</body>
+</html>

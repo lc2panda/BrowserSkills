@@ -45,7 +45,6 @@ take_fullpage.mjs
 test_fullpage.mjs
 test_mcp.js
 
-# Browser extension binaries & extracted content
-*.crx
+# Browser extension binaries only — extension_contents/ is tracked
 *.zip
-crx_extracted/
+crx_extracted/extension.crx
