@@ -1,6 +1,6 @@
-# Browser MCP — 可独立构建的浏览器自动化 MCP 服务器
+# BrowserSkills — 基于 BrowserMCP 二开的浏览器自动化 MCP 服务器
 
-> **给人类**：这是 [Browser MCP](https://browsermcp.io) 的独立构建分支，修复了原项目无法脱离 Monorepo 独立构建的问题，并新增 scroll、fullpage_screenshot 等工具，同时将项目打包为 **Skill**，AI 助手可自动完成全套部署。
+> **给人类**：本项目基于 [BrowserMCP](https://github.com/BrowserMCP/mcp) 二次开发而来，修复了原项目无法脱离 Monorepo 独立构建的问题，并新增 scroll、fullpage_screenshot 等工具，同时将项目打包为跨工具 **Skill**，AI 助手可自动完成全套部署。
 >
 > 本项目附带已改造的 Chrome 扩展（**Browser Skills**，位于 `crx_extracted/extension_contents/`），已移除全部遥测上报，Connect 后跳转本地页面，纯本地运行。**AI 部署完成后，请人类手动安装 Chrome 扩展**，详见 [Chrome 扩展安装说明](#-chrome-扩展安装人类操作)。
 >
@@ -12,7 +12,7 @@
 
 # AI DEPLOYMENT GUIDE
 
-> The following sections are structured for AI agents. Read and execute each step in order to fully deploy Browser MCP with the bundled skill.
+> The following sections are structured for AI agents. Read and execute each step in order to fully deploy BrowserSkills with the bundled skill.
 
 ## STEP 0 — Understand the Architecture
 
@@ -126,7 +126,7 @@ AI 已完成 MCP 服务器构建和 Skill 安装。现在需要你手动在 Chro
 7. 看到「Connected」状态即表示连接成功
 
 **说明：**
-- 此扩展为本地改造版（原 Browser MCP 1.3.4），已移除全部遥测上报
+- 此扩展基于 BrowserMCP 官方扩展 v1.3.4 二次改造，已移除全部遥测上报
 - Connect 成功后会打开本地欢迎页，不访问任何远程服务器
 - 每次启动 Chrome 后需重新点击 Connect
 - MCP Server (`dist/index.js`) 必须在运行状态，扩展才能连接
